@@ -57,3 +57,5 @@ $$\frac{1+o(1)}{63}\sum_{w\le s<z}\frac{\nu_s}{s}v^2\le 1/63+o(1).$$
 The absolute rounding errors sum over $q,s$ to $O(H_x/L^5)$ by the sixfold divisor bound from the tail note and the radii just specified. The primes $q\mid 2xd$ omitted from $B_x$ have negligible reciprocal mass. Restoring the same weight and normalization gives $B_x\ge(62/63-o(1))J_0$ **at every center**. With (4), the excess on the good centers is at most $(51/50-62/63)J_0+o(1)<0.023$ for sufficiently large $X$. The argument does not bound the true tail at a prescribed exceptional center.
 
 The companion [exact finite checks](CheckCentralPacket.py) verify the local class factor, the convolution expansion, and the truncation constants. The analytic inputs and the exceptional-set argument are paper mathematics.
+
+For $d=1$, a [shorter-packet estimate and a deletion construction](CentralPrimePairsNearOneCenter.md) quantify how much these means determine at one prescribed center.

@@ -1,0 +1,56 @@
+# Central prime pairs near a prescribed center
+
+For an integer $x$, write $H_x=\lfloor x^{2/3}\rfloor$, $\vartheta(p)=\log p$ on primes, and $\vartheta(n)=0$ otherwise. Set $G(x)=\sum_{1\le h\le H_x}\vartheta(x-h)\vartheta(x+h)$. Both endpoints are genuine primes, and each unordered pair occurs once. We take $d=1$ throughout. There are two different conclusions about an arbitrary starting center $X$.
+
+1. Let $T=\lfloor X^\theta\rfloor$, $H=H_X$ and $\theta<2/3$ be fixed. Unconditionally, for $\theta>1-\sqrt7/6$, the average of $G$ over $X\le x<X+T$ is $(2+o(1))H$. Ordinary RH suffices for the same conclusion for $\theta>1/3$. Unconditionally, already at $\theta=21/40$, at least $cT$ centers have $G(x)\ge cH$ for an absolute $c>0$.
+2. There is a single subset of the primes in which every marked center in a lacunary sequence has zero central pairs. Deletion changes the log weight in **every** polynomial-length interval by $o(\text{length})$ and the central count at **every other** center by $o(H_x)$. Even the averages of the original and modified counts over every growing packet agree to $o(H)$ per center. The marks may include any prescribed sequence of sufficiently separated prime squares. They can also include infinitely many prime centers known to have $\gg H_x$ original log weight.
+
+The first assertion is a deduction from one-dimensional prime estimates. The second tests which estimates can distinguish a fixed coefficient from its neighbors. The stronger log-power exceptional-set result for longer packets and fixed admissible residue classes is in the [preceding note](CentralPrimePairPacket.md). No optimality of the exponents is asserted.
+
+## Transposing the sum
+
+Freeze the lower interval $[x-H_x,x)$ at $I=[X-H,X)$. The two symmetric differences at the ends contain $O(T)$ integers in total for each $x$. The aggregate error is $O(T^2\log^2 X)=o(HT)$. For $a$ prime in $I$ put $u_a=2X-a$. The transposed expression is
+$$
+\sum_{X\le x<X+T}G(x)=
+\sum_{a\in I}\vartheta(a)\sum_{u_a\le q<u_a+2T}\vartheta(q)+O(T^2\log^2 X).
+$$
+Here every contributing $q$ is odd and gives the unique integer $x=(a+q)/2$. The interval for $q$ has length $2T$, and the short-interval prime number theorem gives $\sum_{a\in I}\vartheta(a)\sim H$. These two facts account for the constant 2. [Short-interval PNT and its range, Theorem 1.1 and Table 1](https://arxiv.org/pdf/2505.24017)
+
+Let $\mu(\theta)$ be the exceptional-set exponent for the prime number theorem in intervals of length $u^\theta$ on a dyadic range. At every fixed relative tolerance $\delta>0$, the Lebesgue measure of exceptional starts is $O_{\delta,\theta,\epsilon}(X^{\mu(\theta)+\epsilon})$ when this exponent is finite. If $\mu(\theta)<2/3$, the inner sum above equals $2T+O(\delta T)+o(T)$ for all but $O_{\delta,\theta,\epsilon}(X^{\mu(\theta)+\epsilon})$ lower endpoints, with proper prime powers handled as follows.
+
+First use the von Mangoldt weight in the inner sum. Split it at $u_a+T$. For either half, each integer start $m$ belongs to $[X+1,X+H+T]$. For all $v\in[m,m+1)$, the intervals $[m,m+T)$ and $(v,v+v^\theta]$ differ in $O(1+T(H+T)/X)$ integers. Their discrepancy differs by $o(T)$, uniformly, even after weighting by $\log(3X)$. Thus a bad integer start at tolerance $\delta$ gives a full unit cell bad at tolerance $\delta/2$. The cells for each half are disjoint as $a$ varies. For the fixed-length convention $X^\theta$ in Bazzanella the endpoint comparison is even immediate. Each bad start costs $O(T\log^2 X)$ including the lower weight. Choose $\epsilon$ with $\mu(\theta)+\epsilon<2/3$. For proper prime powers in the upper sum, their total Mangoldt weight up to $3X$ is $O(\sqrt X\log^2 X)$, and any one can occur for at most $2T$ lower integers, each of weight $O(\log X)$. This costs $o(HT)$ in aggregate. Sending $\delta$ to zero after $X$ tends to infinity proves the asymptotic. If the exceptional set is eventually empty, the same proof uses no bad starts.
+
+Bazzanella's Lemma 1 on $23/42\le\theta<7/12$ bounds $\mu(\theta)$ by $(36\theta^2-96\theta+55)/(39-36\theta)$. It is below $2/3$ exactly when $36(1-\theta)^2<7$ on that range. Larger exponents follow by the short-interval PNT (or monotonicity of $\mu$). Under RH the bound $\mu(\theta)\le1-\theta$ for $\theta\le1/2$, together with monotonicity, gives the stated $1/3$ range. We use only the unconditional branch above $1/2$. [Bazzanella, Lemma 1, pp. 719–720](https://iris.polito.it/retrieve/handle/11583/1397859/e384c42d-e02a-d4b2-e053-9f05fe0a1d67/BUMI_2000_8_3B_3_717_0.pdf) · [Bazzanella–Perelli, Theorem 2](https://doi.org/10.1006/jnth.1999.2429) · [Gafni–Tao, Definition 1.1 and Lemma 1.1, including the range correction](https://arxiv.org/pdf/2505.24017)
+
+At $\theta=21/40$, each interval $[u_a,u_a+2T)$ contains $(u_a,u_a+u_a^{21/40}]$ for large $X$. The quantitative bound at the end of Baker–Harman–Pintz gives $\gg T$ in prime log weight for **each** $a$, hence $\sum_x G(x)\gg HT$. To get the proportion, the two-form upper sieve below gives $G(x)\ll H_x F(x)$, where $F(x)=\prod_{\ell\mid x,\,\ell>2}(1+1/(\ell-2))$. Uniformly in polynomial-length packets, $\sum_x F(x)^2\ll T$. Indeed, expand $F(x)^2=\sum_{k\mid x}b(k)$ with $b$ nonnegative, multiplicative and supported on odd squarefree integers, $b(\ell)=(1+1/(\ell-2))^2-1$. The main term is at most $T\prod_\ell(1+b(\ell)/\ell)=O(T)$ and the total rounding error is at most $\prod_{\ell\le 2X}(1+b(\ell))\ll(\log X)^{O(1)}$. Cauchy–Schwarz on the centers above half the lower bound for the mean gives the assertion. Each such center has $\gg H/\log^2 X$ distinct unweighted pairs. [Baker–Harman–Pintz, final bound on p. 562](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/BakerHarmanPintz.pdf#page=31)
+
+In the range with main term $2H$, the signed residual from the preceding note also satisfies $\sum_{X\le x<X+T}Q(x)=o(HT)$. To check its normalization, write $\mathcal S_1(2x)=2C_2 F(x)$ where $C_2=\prod_{\ell>2}(1-1/(\ell-1)^2)$. In the divisor expansion for $F$ the prime coefficient is $1/(\ell-2)$. Its mean is $\prod_{\ell>2}(1+1/(\ell(\ell-2)))=1/C_2$, with a vanishing tail by absolute convergence and $O((\log X)^{O(1)}/T)$ rounding as above. Replacing $H_x$ by $H$ in the mean costs $o(H)$. The conclusion follows from equation (3) of the preceding note.
+
+## Removing a central coefficient while preserving short-interval counts
+
+Take integers $s_{j+1}>10s_j$, each an odd prime or the square of one. From the primes delete $s_j+h$ whenever both $s_j-h$ and $s_j+h$ are prime and $1\le h\le H_{s_j}$. Call the remaining set $B$ and define $G_B$ with the log weight restricted to $B$. Then $G_B(s_j)=0$. The construction restricts the deletions of the [full-interval model](IsolatedPrimeSquareDeficits.md) to the central window. Two uniform estimates describe the effect at this scale.
+
+For every fixed $0<\delta<1$, all sufficiently large $Y$, and every interval $J\subset[Y,2Y]$ of length $K\ge Y^\delta$,
+$$
+\sum_{n\in J\cap(\mathbb P\setminus B)}\log n\ll_\delta K/\log Y. \tag{1}
+$$
+A dyadic interval meets at most one deletion window. Every deletion in it has both $n$ and $2s_j-n$ prime and comparable to $Y$. The two residues to avoid modulo $\ell$ are $0,2s_j$. Only $2$ and the one odd prime dividing $s_j$ can cause collisions, so the two-form upper sieve is $O_\delta(K/\log^2Y)$ in cardinality. In particular every short-interval prime count with leading term $cK$ in log weight and error $o(K)$ transfers to $B$ at this precision, including in each fixed class where such a law holds.
+
+Uniformly in all sufficiently large **unmarked** integers $x$,
+$$
+0\le G(x)-G_B(x)\ll H_x\,(\log\log x)^{C}/\log x \tag{2}
+$$
+for an absolute $C$. The central window at $x$ meets at most one deletion window. Charge each lost pair to a deleted endpoint $n$, allowing double counting. The integers $n,2s_j-n,2x-n$ must all be primes comparable to $x$. The three rational roots $0,2s_j,2x$ are distinct; a modular collision can occur only at primes dividing the nonzero integer $(2s_j)(2x)(2s_j-2x)$ of size $O(x^3)$. The three-form sieve gives $O(H_x(\log\log x)^C/\log^3x)$ candidates, each of weight $O(\log^2x)$. A local obstruction at a small prime makes this triple impossible here.
+
+For clarity, a Selberg upper square supplies both sieve bounds uniformly in the location of the interval. For $k=2,3$ unit-slope forms on $K$ integers let $\nu_\ell$ count their roots. Sieve up to $z=R^{1/(4k)}$, $R=K^{1/20}$. For admissible forms the denominator truncated at $R$ is at least half the full product $\prod_{\ell<z}(1-\nu_\ell/\ell)^{-1}$ for large $K$. Normalize the squarefree divisor weights $\prod_{\ell\mid d}\nu_\ell/(\ell-\nu_\ell)$ to a probability law. Its mean $\log d$ is at most $k\sum_{\ell<z}(\log\ell)/\ell\le(1/4+o(1))\log R$, so Markov gives the claim. Each pair of divisors $d,e\le R$ costs $O(\nu([d,e]))$ in rounding by CRT. Even the coarse bounds $|\lambda_d|\le\prod_{\ell\mid d}(1-\nu_\ell/\ell)^{-1}\le d$ for the minimizing coefficients and $\nu([d,e])\le[d,e]^2$ give a total $O(R^8)$. All prime form-values counted here exceed $z$. The resulting main bound is $O(K\prod_{\ell<z}(1-\nu_\ell/\ell))$. For two roots at an even target this product is $\ll F(x)/\log^2 K$ at center $x$. For three roots it is $\ll(\log K)^{-3}\prod_{\ell\mid D,\,\ell>3}(1+O(1/\ell))$ with $D$ the product of differences. Splitting the latter primes at $\log(3|D|)$ and using Mertens bounds gives the factor $(\log\log x)^C$ in (2).
+
+For a marked center, $G(s_j)\ll H_{s_j}$ by the two-form estimate. Consequently for **any** integers $U=U(X)\to\infty$, $U\le X$, the mean loss in $[X,X+U)$ is
+$$
+\frac1U\sum_{X\le x<X+U}|G(x)-G_B(x)|
+\ll H_X\left(\frac1U+\frac{(\log\log X)^C}{\log X}\right)=o(H_X).
+$$
+There is at most one mark in such a packet. To ensure actual loss of order $H$ infinitely often, one may alternate widely separated prime squares with prime centers chosen from the good set of the [preceding packet estimate (1)](CentralPrimePairPacket.md). Use a packet with exponent strictly between $5/8$ and $2/3$, the PNT there and the $O(T/\log^3 X)$ bound for exceptional centers. Some prime in each sufficiently large packet then has $G(x)\gg H_x$. This argument makes no assumption on the real count at a prescribed prime square.
+
+Finally let $Q_B$ denote the reflected product of errors in [equation (3)](CentralPrimePairPacket.md), with $\vartheta$ replaced by $\vartheta\,\mathbf 1_B$ and with the same sieve model $C$. Expanding the product shows $(Q-Q_B)-(G-G_B)$ is a sum of two mixed deletion terms up to sign. Each has magnitude $\ll H_x(\log x)^{1/10}/\log x$ by (1) and $\|C\|_\infty\ll(\log x)^{1/10}$. Thus $Q_B(s_j)=-H_{s_j}\mathcal S_1(2s_j)+o(H_{s_j})$, while $Q_B(x)=Q(x)+o(H_x)$ at every unmarked center. Any lower bound meant to exclude failure at a specified center must exploit information sensitive to its exact complementary prime pairs. Even leading-order agreement of the signed means over all growing packets survives this deletion.
+
+The [finite checker](CheckCentralPacket.py) independently verifies the transposition at both endpoint conventions, the effect of deleting prime partners and the three-form charging inequality. The asymptotic bounds above are paper deductions.
