@@ -90,3 +90,44 @@ The [rational enclosure and finite checks](CheckMarkedPrimePartners.py) certify 
           (P(2X-rt)-G(2X-rt)).
 \]
 Each eligible $r$ contributes once for its upper site. The different marks on a site are part of its specified log weight. A uniform upper bound of $0.004K$ for this excess would suffice; the earlier $0.34K$ candidate count does not bound it.
+
+## Counting distinct partners and testing one lower prime at a time
+
+Let $\mathcal Q$ denote the lower tag primes above, $b=\log(v/u)$ and $M=30e^{-\gamma}$. For $q\in\mathcal Q$ let $A_q$ be the set of upper primes $a$ for which $q\mid n=2X-a$, $n\in J$, $n$ is squarefree and $P^-(n)>z$. At every sufficiently large prime square,
+\[
+ \left|\bigcup_q A_q\right|>0.0114K,\qquad
+ \#\{a:a\text{ belongs to exactly one }A_q\}>0.0107K. \tag{4}
+\]
+There is also a statement for individual tags. Fix any $A>0$. In every dyadic interval $(Q,2Q]$ all but $O_A(Q/L^A)$ tag primes have more than $4.95K/q$ upper partners belonging exclusively to their own $A_q$. In a dyad contained in the tag band the exceptional proportion tends to zero for $A>1$. The exceptional set may depend on the center.
+
+To see the individual lower bound, write $r_m$ for the discrepancy in the upper-prime progression of reduced residue $2X\bmod m$, with logarithmic-integral main term. Take the base point in Cai–Lu Lemma 3 to be $X+2T+1$ and its interval length $h_0$. For each $q$, the absolute sieve error is at most $e_q=\sum_{d\mid\prod_{2<\ell\le z}\ell,\,qd\le D}|r_{qd}|$. Unique recovery of $q$ as the only prime exceeding $z$ gives $\sum_q e_q\ll_{B'} H/L^{B'}$ for any prescribed $B'$ upon choosing the logarithmic loss in $D$ accordingly (the implied constant may depend on $B'$). Discard $q$ with $e_q>K/(qL)$. There are $O_A(Q/L^A)$ in a dyad, by taking $B'>A+3$. In this display the sum defining $e_q$ can include $d=1$. The fixed-$q$ linear sieve then gives
+\[
+ |A_q|\ge (M f(2.231)-o(1))K/q.
+\]
+The lower bound is uniform on the retained tags. In deleting squares at either rough endpoint for a fixed $q$, the primes $\ell>z$, $\ell\ne q$, cost $O(H/(qz)+\sqrt{2X})$ by CRT. The square $q^2\mid n$ costs $O(H/q^2+1)$, and $q\nmid a$. Multiplying the errors by $q$ gives $o(K)$ uniformly, since $v+1/2<2/3$.
+
+For distinct $q,q'$ in the band, an intersection is bounded by counting multiples of $qq'$ with both endpoints $z$-rough. In the upper vector-sieve argument for (2), start on that single progression. The two tag primes exceed every sieve prime. The uniform bound is
+\[
+ |A_q\cap A_{q'}|\le(1+E+o(1))\frac{M^2K}{qq'}.
+\]
+Indeed the CRT rounding error per progression is $X^{14/30+o(1)}=o(K/(qq'))$ since $2v+14/30<2/3$. The other relative errors in (2) are uniform on these progressions. Here $H V_2(z)\sim M^2K$. Summing over $q'\ne q$ costs at most $((1+E)M^2 b+o(1))K/q$. Subtraction proves the individual assertion. For (4), the total incidence is at least $(M f(2.231)b-o(1))K$ by (1), while the sum over unordered intersections is at most $((1+E)M^2 b^2/2+o(1))K$. At a site with $k$ tags, $1_{k\ge1}\ge k-\binom{k}{2}$ and $1_{k=1}\ge k-2\binom{k}{2}$. Applying the two inequalities gives (4).
+
+There is a limitation to varying $q$ in the signed test. Set $G_q=(q/M)1_{q\mid n}1_{\{n\ {\rm squarefree},\,P^-(n)>z\}}$, $R_q=\sum G_q(n)P(a)$ and $\Delta_{\eta,q}=\sum(G_q(n)-P(n))W_\eta(a)$. Write $d_\eta=\eta-\lambda$. Uniformly for **every** $q$ in the band, for each of the three cutoffs,
+\[
+ \left|\frac{R_q+\sum G_q(n)W_\eta(a)}{K}-M(1-d_\eta)\right|
+ \le M E(1+d_\eta)+o(1). \tag{5}
+\]
+Indeed $R_q+\sum G_q W_\eta=S_{G_q}-T_{G_q}+o(K)$ by the log decomposition in (3). For $S_{G_q}$ and $T_{G_q}$, (2) now starts at the fixed tag. After multiplying by $q/M$ and summing over $r$, rounding costs $X^{v+1/10+14/30+o(1)}=o(K)$. Omitting $r=q$ removes $O(1/q)$ of the normalized ideal mass. Replacing $\log a$ by $L$ costs $o(K)$ even using the trivial bound $\sum G_q=O(H)$, and the square exclusions above apply with the bounded combined log weight. The two ideal masses are $MK$ and $M d_\eta K$.
+
+For each retained $q$, $R_q/K\ge f(2.231)-o(1)$, so using (3) with $G_q$ gives the same three strict margins $0.25,0.17,0.004$ for $(R_P-\Delta_{\eta,q})/K$ at sufficiently large $p$. Thus absence of a central pair forces the corresponding deficits for almost all tags in each full dyad, simultaneously for the three cutoffs. Yet for any two tags, subtracting (5) cancels the shared lower-prime sum $\sum P(n)W_\eta(a)$ and gives
+\[
+ \big|(R_q+\Delta_{\eta,q})-(R_{q'}+\Delta_{\eta,q'})\big|<0.0069K
+\]
+at all sufficiently large centers. An increase in genuine upper partners can therefore occur alongside a nearly equal decrease in the signed residual. Counting more lower tags supplies no independent bound on the common sum over actual lower primes. None of (4) or (5) establishes $R_P>0$.
+
+The common quantity also gives a sufficient test without any lower tag. Put $C_\eta=\sum_n P(n)W_\eta(2X-n)$. On lower primes the same log decomposition gives $R_P+C_\eta=S_P-T_P+o(K)$. The bounds for $S_P$ and $T_P$ above give
+\[
+ \liminf_{p\to\infty}\frac{R_P+C_\eta}{K}
+ \ge 12\log 4+10I_0-2\log(4/s_*).
+\]
+The right-hand sides exceed $16.2090,15.8443,15.3980$ at the three cutoffs, respectively. In particular, an upper bound $C_{1/10}\le 15.3980K$ at every sufficiently large prime square would already force a central prime pair there. This is an outstanding upper bound on a nonnegative sum with an actual prime lower endpoint. The supplied estimates on tagged composite lower endpoints do not give it.

@@ -35,10 +35,23 @@ def constants():
     gap = Q(1, 10500)
     assert 2*hi*r4_upper/(7*6*5) < gap
     error = 2*gap*(1 + gap)
+    m_low, m_high = 30/hi, 30/lo
+    b_low, b_high = log_bounds(v/u)
+    incidence = m_low*r_lower
+    shared = (1+error)*m_high**2*b_high
+    assert 2*v + Q(14, 30) < Q(2, 3) and v + Q(1, 2) < Q(2, 3)
+    assert incidence - shared > Q('4.95')
+    assert incidence*b_low - shared*b_high/2 > Q('.0114')
+    assert incidence*b_low - shared*b_high > Q('.0107')
+    assert 2*m_high*error*(1 + Q(1, 10)-lam) < Q('.0069')
     i_lower = trap_integral(3, True)[0]
-    for eta, threshold in ((Q(1, 15), '.25'), (Q(1, 12), '.17'), (Q(1, 10), '.004')):
+    cutoffs = ((Q(1, 15), '.25', '16.2090'), (Q(1, 12), '.17', '15.8443'),
+               (Q(1, 10), '.004', '15.3980'))
+    for eta, threshold, common_threshold in cutoffs:
         s_star = 5 - 30*eta
-        main = r_lower + 12*log_bounds(4)[0] + 10*i_lower - 2*log_bounds(4/s_star)[1]
+        common = 12*log_bounds(4)[0] + 10*i_lower - 2*log_bounds(4/s_star)[1]
+        assert common > Q(common_threshold)
+        main = r_lower + common
         result = main - (30/lo)*(1 - (eta-lam) + error*(1 + eta-lam))
         assert result > Q(threshold)
         digits = result.numerator * 10000 // result.denominator
@@ -98,9 +111,39 @@ def marked_identity():
     return checked, multi, squareful
 
 
+def tag_overlaps():
+    x, tags, z = 1009**2, (11, 13, 17, 19), 5
+    low, stop = x - floor_root(x**2, 3), x - 2*floor_root(x**21, 40)
+    partners = {q: set() for q in tags}
+    multiplicities = Counter()
+    for n in range(low, stop):
+        fs = factors(n)
+        a = 2*x-n
+        if min(fs) <= z or len(fs) != len(set(fs)) or len(factors(a)) != 1:
+            continue
+        hits = set(tags).intersection(fs)
+        if hits:
+            multiplicities[a] = len(hits)
+            for q in hits:
+                partners[q].add(a)
+    distinct = len(multiplicities)
+    unique = sum(k == 1 for k in multiplicities.values())
+    incidence = sum(map(len, partners.values()))
+    pairs = sum(len(partners[q] & partners[t]) for q in tags for t in tags if q < t)
+    assert pairs == sum(comb(k, 2) for k in multiplicities.values()) and pairs > 0
+    assert distinct >= incidence-pairs and unique >= incidence-2*pairs
+    for q in tags:
+        shared = sum(len(partners[q] & partners[t]) for t in tags if t != q)
+        assert sum(multiplicities[a] == 1 for a in partners[q]) >= len(partners[q])-shared
+    return incidence, pairs, distinct, unique
+
+
 if __name__ == "__main__":
     constants()
     print(f"{crt_counts()} CRT periods and 49 vector-sieve sign checks passed.")
     checks, multiple, squares = marked_identity()
     print(f"{checks} formal log coefficients passed, with {multiple} multiply tagged "
           f"lower sites and {squares} rough squareful upper sites at toy cutoffs.")
+    incidence, pairs, distinct, unique = tag_overlaps()
+    print(f"Toy true-upper-prime counts: {incidence} incidences, {pairs} pair intersections, "
+          f"{distinct} distinct upper partners and {unique} with exactly one tag.")
