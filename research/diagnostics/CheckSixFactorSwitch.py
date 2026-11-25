@@ -79,6 +79,25 @@ def check_finite_sieve():
     print(f"Verified {cases} admissible-class periods and all 18 finite Selberg forms.")
 
 
+def check_five_factor_obstruction():
+    A, C, T = F(31, 8), F(67, 5), F(179, 100)
+    b = (C-A)/(C-1)
+    L = F(3, 4)/(1-b)
+    j0 = [(1, 4*b), (1, L), (C/A, T*(A-b)/(b*(A-T)))]
+    j1 = [(1, L), (C, (A-b)/(A-T))]
+    assert lower_log_sum(j0) > F(660, 100)
+    assert -lower_log_sum([(-k, x) for k, x in j1]) < F(659, 100)
+    lo, hi = log_bounds(F(3))
+    assert F(659, 100) < 6*lo <= 6*hi < F(660, 100)
+    harmonic = sum(F(1, n) for n in range(1, 129))
+    assert lower_log_sum([(1, 24/C), (7, F(2))], -harmonic) > 0
+    start = F(7, 9)
+    tail = [(C/A, 2/start), (-C/A*(A/2-1), (A-start)/(A-2))]
+    assert lower_log_sum(tail) > F(1638, 1000)
+    print("Certified the separate-sieve obstruction for all fixed Richert parameters at v=4.")
+
+
 if __name__ == "__main__":
     check_margins()
     check_finite_sieve()
+    check_five_factor_obstruction()
