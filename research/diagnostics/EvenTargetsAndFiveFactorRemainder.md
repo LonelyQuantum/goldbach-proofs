@@ -1,5 +1,7 @@
 # Central prime plus almost-prime bounds at every even target
 
+**Subsequent result.** Changing the sieve cutoff to $D^{1/6}$ gives five factors at $H=\lfloor X^{2/3}\rfloor$ and four at $H=\lfloor X^{11/15}\rfloor$ for every sufficiently large even target. The signed band below concerns the original $D^{1/4}$ cutoff. [Proof and certified constants](CentralFiveAtTwoThirds.md)
+
 Write $N=2X$, where $X$ is an integer. Fix $d\ge1$, $193/290<\theta\le2/3$, and $H=\lfloor X^\theta\rfloor$. For $0\le b<d$ with $(b,d)=(N-b,d)=1$, count positive offsets $h\le H$ for which $t=X+h$ is prime, $t\equiv b\bmod d$, and $a=X-h$ is squarefree with at most $r$ prime factors. Denote this count by $G_r$. The unconditional paper deduction in the first part is
 $$
 G_6\gg_{d,\theta} \mathfrak S_d(N)\,\frac{H}{(\log X)^2},
