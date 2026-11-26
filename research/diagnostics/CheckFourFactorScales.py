@@ -176,10 +176,8 @@ def log_width_upper(lo, hi):
     )
 
 
-def high_certificate(delta_hi, n=28):
-    from scipy.optimize import linprog
+def high_problem(delta_hi, n=28):
     from scipy.sparse import coo_matrix
-    from math import ceil
 
     edges = high_edges(n)
     nb = len(edges) - 1
@@ -221,6 +219,7 @@ def high_certificate(delta_hi, n=28):
     cols = []
     coeffs = []
     weights = []
+    configurations = []
     for i in range(nb):
         x, X = edges[i : i + 2]
         if 4 * x >= 3 * g:
@@ -260,6 +259,7 @@ def high_certificate(delta_hi, n=28):
                     col = len(weights)
                     weights.append(w)
                     cfg = (i, j, k, l)
+                    configurations.append(cfg)
                     for length in (0, 1, 2, 3):
                         for tags, count in Counter(combinations(cfg, length)).items():
                             left = list(cfg)
@@ -285,9 +285,14 @@ def high_certificate(delta_hi, n=28):
     mat = coo_matrix(
         (coeffs, (rows, cols)), shape=(len(row_prices), len(weights))
     ).tocsc()
-    # Optimize in floating point, then certify all box inequalities in integers.
+    return mat, row_prices, weights, configurations, edges, level
+
+
+def solve_cover(mat, row_prices, weights):
+    from scipy.optimize import linprog
+
     sol = linprog(
-        -np.array(weights) / unit,
+        -np.array(weights) / 10**11,
         A_ub=mat,
         b_ub=np.array([1024 * float(c) for c in row_prices]),
         bounds=(0, None),
@@ -295,6 +300,14 @@ def high_certificate(delta_hi, n=28):
     )
     if not sol.success:
         raise ArithmeticError(sol.message)
+    return sol
+
+
+def certified_cover(mat, row_prices, weights, solution=None):
+    from math import ceil
+
+    unit = 10**11
+    sol = solve_cover(mat, row_prices, weights) if solution is None else solution
     dual = [max(0, ceil(-float(x) * unit)) for x in sol.ineqlin.marginals]
     prices = [float(c) for c in row_prices]
     for j, w in enumerate(weights):
@@ -306,8 +319,18 @@ def high_certificate(delta_hi, n=28):
             h = min(range(len(ids)), key=lambda m: prices[ids[m]] / mult[m])
             dual[ids[h]] += ceil_ratio(missing, int(mult[h]))
     kw = np.array(dual, dtype=np.int64)
-    assert max(dual) * 6144 * int(max(np.diff(mat.indptr))) < 2**63 - 1
-    assert np.min(mat.T @ kw - np.array(weights, dtype=np.int64)) >= 0
+    if max(dual) * int(mat.data.max()) * int(np.diff(mat.indptr).max()) < 2**63:
+        assert np.min(mat.T @ kw - np.array(weights, dtype=np.int64)) >= 0
+    else:
+        for j, w in enumerate(weights):
+            a, b = mat.indptr[j : j + 2]
+            assert (
+                sum(
+                    dual[int(i)] * int(v)
+                    for i, v in zip(mat.indices[a:b], mat.data[a:b])
+                )
+                >= w
+            )
     # Round each row cost outwards before summing to bound denominator growth.
     price_unit = 10**13
     value = sum(
@@ -316,6 +339,11 @@ def high_certificate(delta_hi, n=28):
         if v
     )
     return F(1024 * value, unit * price_unit), len(weights), len(row_prices)
+
+
+def high_certificate(delta_hi, n=28):
+    matrix, prices, weights, *_ = high_problem(delta_hi, n)
+    return certified_cover(matrix, prices, weights)
 
 
 @njit
