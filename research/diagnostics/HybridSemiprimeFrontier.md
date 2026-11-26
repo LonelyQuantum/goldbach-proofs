@@ -88,6 +88,8 @@ $$
 $$
 Such $r$ are in the interior. Also $r_0^2<s-H$ eventually, so every pair with one prime $<r_0$ has its partner $>r_0$. This proves assertion 2 with separate prime weights for the stated restrictions. Finally apply the interior projection with $\mathcal D=(D_0,Z/w]$ and $r<r_0$ to obtain (2). The possible boundary error was estimated before the projection.
 
+One can also isolate the larger-prime orientation in the balanced region if desired. On $rt\in I$, $r\ge\sqrt{s}$ forces $r>t$, so the uniform bound from assertion 2 applies directly with this lower cutoff. For the remaining pairs with $t<r<\sqrt{s}$, both primes lie in $[(s-H)/\sqrt{s},\sqrt{s}]$. There are $O((1+H/\sqrt{s})^2)=O(s^{1/3})$ such ordered pairs, with weight per pair at most $L^2\tau(N-rt)=s^{o(1)}$. This proves the same $O_A(hL^{-A})$ bound for the larger-prime orientation alone.
+
 ## An arithmetic expression for the outstanding conductors
 
 The last term in (4) reaches order one, before log factors, at $F\asymp h/\sqrt{s}$. For the high conductors in (2), the signs and the phase can instead be combined exactly. For each squarefree $m=dj$ on the support, each unit product $b=rt$ and $a=N-b$, one has
